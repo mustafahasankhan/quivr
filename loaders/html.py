@@ -7,6 +7,17 @@ import tempfile
 import os
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFileRec, UploadedFile
+from urllib.parse import urlparse
+
+def validate_url(url):
+    try:
+        parsed_url = urlparse(url)
+        if parsed_url.scheme and parsed_url.netloc:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
 
 def process_html(vector_store, file, stats_db):
     return process_file(vector_store, file, UnstructuredHTMLLoader, ".html", stats_db=stats_db)
